@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CubeSpaceFree
@@ -15,13 +15,20 @@ namespace CubeSpaceFree
 
         public Text scoreText;
         public Button restartButton;
-        public Text gameOverText;
+        public Text 
+            gameOverText,
+            bestTextScore;
+
         public bool isGameOver = false;
-        public int score;
+        public int
+            score,
+            bestScore;
 
         // Use this for initialization
         void Start()
         {
+            bestTextScore.text = "Mejor puntaje: " + PlayerPrefs.GetInt("bestScore").ToString();
+
             score = 0;
             restartButton.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
@@ -87,13 +94,21 @@ namespace CubeSpaceFree
         void UpdateScore()
         {
             scoreText.text = "Score: " + score;
-
         }
 
         public void GameOver()
         {
+            if (PlayerPrefs.GetInt("bestScore") < score)
+            {
+                PlayerPrefs.SetInt("bestScore", score);
+                PlayerPrefs.Save();    
+            }
+
+            bestTextScore.text = "Mejor puntaje: " + PlayerPrefs.GetInt("bestScore").ToString();
+
             restartButton.gameObject.SetActive(true);
             gameOverText.gameObject.SetActive(true);
+            isGameOver = true;
         }
     }
 }

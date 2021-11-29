@@ -4,7 +4,6 @@ using System.Collections;
 // Heavily based on Unity Space Shooter tutorial
 namespace CubeSpaceFree
 {
-
     [System.Serializable]
     public class Boundary
     {
